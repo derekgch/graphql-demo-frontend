@@ -5,7 +5,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 const BucketContainer = (props) => {
   const generateMenu = () =>{
     return props.buckets.map(element => {
-      return <Dropdown.Item  eventKey= {element._id}> {element.title}</Dropdown.Item>
+      const { _id, title } = element;
+      return <Dropdown.Item  eventKey= {_id} key={_id}> {title}</Dropdown.Item>
     })
   }
 

@@ -8,7 +8,7 @@ const FruitsContainer = (props) => {
     return props.fruits.map( element => {
       const {_id, description } = element;
       return (
-        <tr>
+        <tr key={_id}>
           <td>{_id}</td>
           <td>{description}</td>
         </tr>
