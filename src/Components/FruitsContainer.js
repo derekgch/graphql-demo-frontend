@@ -27,7 +27,7 @@ const FruitsContainer = (props) => {
         </tr>
       </thead>
       <tbody>
-        {generateRows()}
+        {props.fruits ? generateRows() : null}
       </tbody>
     </Table>
       

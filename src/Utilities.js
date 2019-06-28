@@ -4,6 +4,11 @@ const BackendUrl = 'http://localhost:3001/graphql'
 // POST query : { 
 //  "query": "{ buckets { _id title description fruits { _id description} } }"
 // }
+//{
+//   "query": "...",
+//   "operationName": "...",
+//   "variables": { "myVariable": "someValue", ... }
+// }
 //
 
 const generateConfig = (data) =>{

@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import BucketContainer from './Components/BucketContainer';
 import FruitsContainer from './Components/FruitsContainer';
 import { fetchBuckets } from './Utilities';

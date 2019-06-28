@@ -22,7 +22,7 @@ const BucketContainer = (props) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu >
-          {generateMenu()}
+          {props.buckets? generateMenu() : null}
         </Dropdown.Menu>
       </Dropdown>
     </div>
