@@ -6,7 +6,10 @@ const BucketContainer = (props) => {
   const generateMenu = () =>{
     return props.buckets.map(element => {
       const { _id, title } = element;
-      return <Dropdown.Item  eventKey= {_id} key={_id}> {title}</Dropdown.Item>
+      if( _id === props.selectedBucket)
+        return <Dropdown.Item  eventKey= {_id} key={_id} active> {title}</Dropdown.Item>
+      else
+        return <Dropdown.Item  eventKey= {_id} key={_id} > {title}</Dropdown.Item>
     })
   }
 

@@ -10,6 +10,7 @@ import './App.css';
 function App() {
   const [buckets, setBuckets] = useState([]);
   const [fruits, setFruits] = useState([]);
+  const [selectedBucket, setSelectedBucket] = useState('');
 
 
   const fetchData = () =>{
@@ -22,9 +23,11 @@ function App() {
 
   const handleSelect = (eventKey, event) =>{
     // console.log(eventKey, event.target)
+    
     const foundFruits = buckets.find(e => e._id === eventKey);
     // console.log(foundFruits)
     setFruits(foundFruits.fruits);
+    setSelectedBucket(eventKey)
   }
   // console.log(buckets)
   return (
@@ -32,6 +35,7 @@ function App() {
       <BucketContainer 
         buckets = {buckets}
         handleSelect={handleSelect}
+        selectedBucket={selectedBucket}
         />
       <FruitsContainer fruits = {fruits}/>
     </div>
