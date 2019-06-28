@@ -2,21 +2,25 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const BucketContainer = () => {
+const BucketContainer = (props) => {
+  const generateMenu = () =>{
+    return props.buckets.map(element => {
+      return <Dropdown.Item  eventKey= {element._id}> {element.title}</Dropdown.Item>
+    })
+  }
+
+
   return (
     <div>
-      <Dropdown>
+      <Dropdown onSelect={ props.handleSelect }>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Dropdown Button
+          Bucket List
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <Dropdown.Menu >
+          {generateMenu()}
         </Dropdown.Menu>
       </Dropdown>
-      
     </div>
   );
 };
