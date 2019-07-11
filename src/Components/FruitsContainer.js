@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 
 const FruitsContainer = (props) => {
   const generateRows = () =>{
+    if(!Array.isArray(props.fruits)) return null;
+
     return props.fruits.map( element => {
       const {_id, description } = element;
       return (
