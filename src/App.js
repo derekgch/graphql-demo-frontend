@@ -1,6 +1,7 @@
 import React from 'react';
 import BucketContainer from './Components/BucketContainer';
 import FruitsContainer from './Components/FruitsContainer';
+import CreateForm from './Components/CreateForm';
 import { fetchBuckets } from './Utilities';
 import { useState, useEffect } from 'react';
 
@@ -37,6 +38,8 @@ function App() {
         selectedBucket={selectedBucket}
         />
       <FruitsContainer fruits = {fruits}/>
+
+      <CreateForm />
     </div>
   );
 }
