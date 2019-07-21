@@ -1,9 +1,15 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchBucketAction } from '../Actions';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const BucketContainer = (props) => {
+  useEffect(
+    props.fetchBucketAction
+  , [])
   const generateMenu = () =>{
+    console.log(props.buckets)
     if(!Array.isArray(props.buckets)) return null;
     return props.buckets.map(element => {
       const { _id, title } = element;
@@ -16,7 +22,7 @@ const BucketContainer = (props) => {
 
   return (
     <div>
-      <Dropdown onSelect={ props.handleSelect }>
+      <Dropdown >
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Bucket List
         </Dropdown.Toggle>
@@ -29,4 +35,16 @@ const BucketContainer = (props) => {
   );
 };
 
-export default BucketContainer;
+
+const mapStateToProps = (state) => {	
+	return {
+    	buckets:state.buckets,
+	}
+}
+	
+const mapDispatchToProps = (dispatch) => {
+	return {
+    fetchBucketAction: () => fetchBucketAction()(dispatch),
+	}
+}
+export default connect(mapStateToProps,mapDispatchToProps)(BucketContainer);

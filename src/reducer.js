@@ -1,4 +1,8 @@
+import { NEW_BUCKETS } from './Actions';
+
 const initialState = {
+  buckets:[],
+  fruits:[],
 }
 
 function reducer (state = initialState, action) {
@@ -7,8 +11,8 @@ function reducer (state = initialState, action) {
   console.log('action', action);
 
   switch(action.type) {
-      case "NEW_SUGGESTIONS":
-          return {...state}
+      case NEW_BUCKETS:
+          return { ...state, buckets: action.payload }
       default:
           return state;
   }      
