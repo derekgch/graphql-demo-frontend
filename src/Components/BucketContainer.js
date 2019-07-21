@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchBucketAction } from '../Actions';
+import { fetchBucketAction, fetchFruitsAction } from '../Actions';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const BucketContainer = (props) => {
@@ -20,9 +20,14 @@ const BucketContainer = (props) => {
     })
   }
 
+   const handleSelect = (eventKey, event) =>{
+    console.log(eventKey);
+    props.fetchFruitsAction(eventKey);
+  }
+
   return (
     <div>
-      <Dropdown >
+      <Dropdown onSelect={handleSelect}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Bucket List
         </Dropdown.Toggle>
@@ -44,7 +49,8 @@ const mapStateToProps = (state) => {
 	
 const mapDispatchToProps = (dispatch) => {
 	return {
-    fetchBucketAction: () => fetchBucketAction()(dispatch),
+    fetchBucketAction: () => dispatch(fetchBucketAction()),
+    fetchFruitsAction: bucketID => dispatch(fetchFruitsAction(bucketID))
 	}
 }
 export default connect(mapStateToProps,mapDispatchToProps)(BucketContainer);

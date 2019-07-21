@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
-import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 
 const FruitsContainer = (props) => {
@@ -37,4 +37,11 @@ const FruitsContainer = (props) => {
   );
 };
 
-export default FruitsContainer;
+
+const mapStateToProps = (state) => {	
+	return {
+    	fruits:state.fruits,
+	}
+}
+
+export default connect(mapStateToProps)(FruitsContainer);
