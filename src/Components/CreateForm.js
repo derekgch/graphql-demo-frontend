@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { postFruitAction } from '../Actions';
 
-const CreateForm = () => {
+const CreateForm = (props) => {
   const [ currentSelection, setCurrentSelection ] = useState('Create Options');
   const [ description, setDescription ] = useState('');
   
@@ -29,8 +29,8 @@ const CreateForm = () => {
   const handleSumbit= (event) =>{
     event.preventDefault();
     event.stopPropagation();
-    console.log(currentSelection, description)
-
+    console.log(currentSelection, description);
+    props.submitAction({bucketID: props.selected.id, description})
   }
 
   return (
