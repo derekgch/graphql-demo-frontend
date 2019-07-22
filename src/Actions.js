@@ -27,6 +27,12 @@ export function storeSelected(payload){
   }
 }
 
+export function deleteFruitAction(id) {
+  return dispatch =>{
+    console.log("fruit to be deleted",id)
+  }
+}
+
 export function postFruitAction(payload) {
   return dispatch =>{
   console.log("in post fruit action", payload)
