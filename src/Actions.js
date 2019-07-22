@@ -1,4 +1,4 @@
-import { fetchBuckets, postFruit } from './Utilities';
+import { fetchBuckets, postFruit, deleteFruit } from './Utilities';
 
 export const NEW_BUCKETS = 'NEW_BUCKETS';
 export const NEW_FRUITS = 'NEW_FRUITS';
@@ -28,24 +28,32 @@ export function storeSelected(payload){
 }
 
 export function deleteFruitAction(id) {
-  return dispatch =>{
+  return ( dispatch, getState ) =>{
+    const removeFruit = getState().fruits.filter( each => each._id !== id)
+
     console.log("fruit to be deleted",id)
+    return deleteFruit(id)
+      .then( data => {
+        dispatch(fetchBucketAction()) 
+        dispatch(storeFruits(removeFruit))
+      })
+
   }
 }
 
 export function postFruitAction(payload) {
-  return dispatch =>{
-  console.log("in post fruit action", payload)
-
-    postFruit(payload)
+  return ( dispatch, getState ) =>{
+    console.log("in post fruit action", payload)
+    
+    return postFruit(payload)
       .then(
-        data =>  dispatch(fetchBucketAction()),
+        data =>  {
+          dispatch(fetchBucketAction())
+          const newFruits = [...getState().fruits, data.data.createFruit]
+          dispatch(storeFruits(newFruits));
+          // console.log(data)
+        },
         error => dispatch(fetchBucketAction())
-      )
-      .then(
-        data => setTimeout(() => {
-          dispatch(fetchFruitsAction(payload.bucketID))          
-        }, 200)
       )
   }
 }

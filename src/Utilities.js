@@ -27,18 +27,6 @@ const generateConfig = (data) =>{
     }
 }
 
-const generateMutationConfig = (data) =>{
-  return {
-    method: 'POST', 
-    headers: {
-      'Content-Type': 'application/JSON',
-      'Data-Type': 'application/JSON'
-    },
-    body: JSON.stringify({query: data})
-    }
-}
-
-
 export const fetchBuckets = () =>{
   const query = `{ 
         buckets { 
@@ -60,8 +48,19 @@ export const postFruit = (data) =>{
   const query = `mutation{
     createFruit(bucketId:"${data.bucketID}", description:"${data.description}"){
       _id
+      description
     }
   }`
-  return fetch(`${BackendUrl}`, generateMutationConfig(query))
+  return fetch(`${BackendUrl}`, generateConfig(query))
+          .then(response => response.json())
+}
+
+export const deleteFruit = (id) =>{
+  const query = `mutation{
+    deleteFruit(_id:"${id}"){
+      _id
+    }
+  }`
+  return fetch(`${BackendUrl}`, generateConfig(query))
           .then(response => response.json())
 }

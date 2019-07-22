@@ -43,7 +43,6 @@ const FruitsContainer = (props) => {
   );
 };
 
-
 const mapStateToProps = (state) => {	
 	return {
     	fruits:state.fruits,
