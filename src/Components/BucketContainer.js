@@ -9,7 +9,6 @@ const BucketContainer = (props) => {
     props.fetchBucketAction
   , [])
   const generateMenu = () =>{
-    console.log(props.buckets)
     if(!Array.isArray(props.buckets)) return null;
     return props.buckets.map(element => {
       const { _id, title } = element;
@@ -21,7 +20,6 @@ const BucketContainer = (props) => {
   }
 
    const handleSelect = (eventKey, event) =>{
-    console.log(eventKey);
     props.fetchFruitsAction(eventKey);
   }
 
@@ -29,7 +27,7 @@ const BucketContainer = (props) => {
     <div>
       <Dropdown onSelect={handleSelect}>
         <Dropdown.Toggle variant="success" id="dropdown-basic">
-          Bucket List
+          {props.selected? props.selected.title : "Bucket List"}
         </Dropdown.Toggle>
 
         <Dropdown.Menu >
@@ -43,7 +41,8 @@ const BucketContainer = (props) => {
 
 const mapStateToProps = (state) => {	
 	return {
-    	buckets:state.buckets,
+      buckets:state.buckets,
+      selected:state.selected,
 	}
 }
 	

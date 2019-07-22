@@ -3,6 +3,8 @@ import { fetchBuckets } from './Utilities';
 export const NEW_BUCKETS = 'NEW_BUCKETS';
 export const NEW_FRUITS = 'NEW_FRUITS';
 export const NEW_SELECTED = 'NEW_SELECTED';
+export const POST_FRUIT = 'POST_FRUIT';
+
 
 export function storeBuckets(payload){
   return {
@@ -26,6 +28,12 @@ export function storeSelected(payload){
   }
 }
 
+export function postFruitAction(payload) {
+  return dispatch =>  {
+    console.log("in post fruit action")
+  }
+}
+
 export function fetchBucketAction() {
   return dispatch =>{
     fetchBuckets()
@@ -38,6 +46,7 @@ export function fetchFruitsAction(bucketID) {
   return (dispatch, getState) =>{
     const { buckets } = getState();
     const found = buckets.find(e => e._id === bucketID);
+    dispatch(storeSelected({id:found._id,title:found.title }));
     dispatch(storeFruits(found.fruits));
   }
 }

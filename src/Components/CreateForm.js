@@ -1,22 +1,37 @@
 import React, {useState, useEffect} from 'react';
+import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { postFruitAction } from '../Actions';
 
 const CreateForm = () => {
   const [ currentSelection, setCurrentSelection ] = useState('Create Options');
-
-
+  const [ description, setDescription ] = useState('');
+  
   const handleSelect = (eventKey) =>{
     setCurrentSelection(eventKey.toUpperCase());
+  }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case 'description':
+        setDescription(value);
+        break;
+    
+      default:
+        break;
+    }
+    
   }
 
   const handleSumbit= (event) =>{
     event.preventDefault();
     event.stopPropagation();
-    console.log(currentSelection)
-  }
+    console.log(currentSelection, description)
 
+  }
 
   return (
     <Form onSubmit={handleSumbit}>
@@ -32,7 +47,11 @@ const CreateForm = () => {
       
       <Form.Group controlId="formBasicInput">
         <Form.Label> Description </Form.Label>
-        <Form.Control type="text" placeholder="Description" />
+        <Form.Control type="text" 
+          placeholder="Description" 
+          name="description" 
+          onChange={handleChange}
+          value={description}/>
       </Form.Group>
       <Button variant="primary" type="submit">
         Submit
@@ -41,4 +60,17 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+const mapStateToProps = (state) =>{
+  return {
+    selected: state.selected,
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    submitAction: data => dispatch(postFruitAction(data))
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps )(CreateForm);
