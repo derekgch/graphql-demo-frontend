@@ -1,10 +1,11 @@
-import { fetchBuckets, postFruit, deleteFruit } from './Utilities';
+import { fetchBuckets, postFruit, deleteFruit, updateFruit } from './Utilities';
 
 export const NEW_BUCKETS = 'NEW_BUCKETS';
 export const NEW_FRUITS = 'NEW_FRUITS';
 export const NEW_SELECTED = 'NEW_SELECTED';
 export const POST_FRUIT = 'POST_FRUIT';
 export const EDIT_FRUIT = 'EDIT_FRUIT';
+export const NULLIFY_EDIT_FRUIT = 'NULLIFY_EDIT_FRUIT';
 
 
 export function storeBuckets(payload){
@@ -35,11 +36,27 @@ export function storeEditFruit(payload){
   }
 }
 
+export function emptyEditFruit(){
+  return {
+    type:NULLIFY_EDIT_FRUIT,
+    payload:null
+  }
+}
+
+export function patchFruitAction(data){
+  return ( dispatch, getState ) =>{
+    const changeFruit = getState().fruits.map(element => element._id === data._id? data : element);
+    return updateFruit(data._id, data.description)
+      .then( data =>{
+        dispatch(fetchBucketAction()) ;
+        dispatch(storeFruits(changeFruit))
+      })
+  }
+}
+
 export function deleteFruitAction(id) {
   return ( dispatch, getState ) =>{
     const removeFruit = getState().fruits.filter( each => each._id !== id)
-
-    console.log("fruit to be deleted",id)
     return deleteFruit(id)
       .then( data => {
         dispatch(fetchBucketAction()) 
@@ -50,8 +67,6 @@ export function deleteFruitAction(id) {
 
 export function postFruitAction(payload) {
   return ( dispatch, getState ) =>{
-    console.log("in post fruit action", payload)
-    
     return postFruit(payload)
       .then(
         data =>  {

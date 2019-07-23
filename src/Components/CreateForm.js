@@ -3,15 +3,13 @@ import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { postFruitAction } from '../Actions';
+import { postFruitAction, patchFruitAction, emptyEditFruit } from '../Actions';
 
 const CreateForm = (props) => {
   const editFruit = props.selectedFruit? props.selectedFruit.description : "";
-  const [ currentSelection, setCurrentSelection ] = useState('Create Options');
+  const [ currentSelection, setCurrentSelection ] = useState('Create');
   const [ description, setDescription ] = useState(editFruit);
 
-
-  
   const handleSelect = (eventKey) =>{
     setCurrentSelection(eventKey.toUpperCase());
   }
@@ -22,23 +20,30 @@ const CreateForm = (props) => {
       case 'description':
         setDescription(value);
         break;
-    
       default:
         break;
     }
-    
   }
 
   const handleSumbit= (event) =>{
     event.preventDefault();
     event.stopPropagation();
     console.log(currentSelection, description);
-    props.submitAction({bucketID: props.selected.id, description})
+    if(props.selectedFruit){
+      const { _id } = props.selectedFruit;
+      props.updateAction({_id, description});
+    }else
+      props.submitAction({bucketID: props.selected.id, description})
   }
 
   useEffect( ()=>{
-    if(props.selectedFruit)
+    if(props.selectedFruit){
       setDescription(props.selectedFruit.description)
+      setCurrentSelection("EDIT")
+    }else{
+      setDescription('')
+      setCurrentSelection("Create")
+    }
   }, [props.selectedFruit])
 
   return (
@@ -48,8 +53,8 @@ const CreateForm = (props) => {
         {currentSelection}
       </Dropdown.Toggle>
       <Dropdown.Menu >
-        <Dropdown.Item  eventKey='bucket' > Bucket </Dropdown.Item>
-        <Dropdown.Item  eventKey='fruit' > Fruit </Dropdown.Item>
+        <Dropdown.Item  eventKey='Create' > Create </Dropdown.Item>
+        <Dropdown.Item  eventKey='Edit' > Edit </Dropdown.Item>
       </Dropdown.Menu>
       </Dropdown>
       
@@ -77,7 +82,9 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-    submitAction: data => dispatch(postFruitAction(data))
+    submitAction: data => dispatch(postFruitAction(data)),
+    updateAction: data => dispatch(patchFruitAction(data)),
+    emptySelectedFruit: () => dispatch(emptyEditFruit())
   }
 }
 

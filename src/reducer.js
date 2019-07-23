@@ -1,4 +1,5 @@
-import { NEW_BUCKETS, NEW_FRUITS, NEW_SELECTED, EDIT_FRUIT } from './Actions';
+import {  NEW_BUCKETS, NEW_FRUITS, NEW_SELECTED, EDIT_FRUIT, 
+          NULLIFY_EDIT_FRUIT } from './Actions';
 
 const initialState = {
   buckets:[],
@@ -8,8 +9,6 @@ const initialState = {
 }
 
 function reducer (state = initialState, action) {
-
-  // console.log('state', state);
   console.log('action', action);
 
   switch(action.type) {
@@ -21,6 +20,8 @@ function reducer (state = initialState, action) {
         return { ...state, selected: action.payload }
       case EDIT_FRUIT:
         return { ...state, editFruit: action.payload }
+      case NULLIFY_EDIT_FRUIT:
+          return { ...state, editFruit:null }
       default:
         return state;
   }      

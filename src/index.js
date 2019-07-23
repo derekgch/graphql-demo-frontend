@@ -24,8 +24,8 @@ const addLoggingToDispatch = (store) => {
 
 store.dispatch = addLoggingToDispatch(store);
 
-console.log(store);
-console.log('after createStore', store.getState());
+// console.log(store);
+// console.log('after createStore', store.getState());
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

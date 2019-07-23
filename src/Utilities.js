@@ -55,6 +55,16 @@ export const postFruit = (data) =>{
           .then(response => response.json())
 }
 
+export const updateFruit = (id, description) =>{
+  const query = `mutation{
+    updateFruit(_id:"${id}", description:"${description}"){
+      _id
+    }
+  }`
+  return fetch(`${BackendUrl}`, generateConfig(query))
+          .then(response => response.json())
+}
+
 export const deleteFruit = (id) =>{
   const query = `mutation{
     deleteFruit(_id:"${id}"){

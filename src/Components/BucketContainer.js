@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchBucketAction, fetchFruitsAction } from '../Actions';
+import { fetchBucketAction, fetchFruitsAction, emptyEditFruit } from '../Actions';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const BucketContainer = (props) => {
@@ -21,6 +21,7 @@ const BucketContainer = (props) => {
 
    const handleSelect = (eventKey, event) =>{
     props.fetchFruitsAction(eventKey);
+    props.emptyFruitAction();
   }
 
   return (
@@ -49,7 +50,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
     fetchBucketAction: () => dispatch(fetchBucketAction()),
-    fetchFruitsAction: bucketID => dispatch(fetchFruitsAction(bucketID))
+    fetchFruitsAction: bucketID => dispatch(fetchFruitsAction(bucketID)),
+    emptyFruitAction: () => dispatch(emptyEditFruit()),
 	}
 }
 export default connect(mapStateToProps,mapDispatchToProps)(BucketContainer);
