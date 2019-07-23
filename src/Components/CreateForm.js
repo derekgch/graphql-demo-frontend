@@ -34,15 +34,20 @@ const CreateForm = (props) => {
       props.updateAction({_id, description});
     }else
       props.submitAction({bucketID: props.selected.id, description})
+    props.emptySelectedFruit();
+    emptyFruit();
+  }
+  const emptyFruit = () =>{
+    setDescription('');
+    setCurrentSelection("Create");
   }
 
   useEffect( ()=>{
     if(props.selectedFruit){
-      setDescription(props.selectedFruit.description)
-      setCurrentSelection("EDIT")
+      setDescription(props.selectedFruit.description);
+      setCurrentSelection("EDIT");
     }else{
-      setDescription('')
-      setCurrentSelection("Create")
+      emptyFruit();
     }
   }, [props.selectedFruit])
 
