@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,8 +6,11 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { postFruitAction } from '../Actions';
 
 const CreateForm = (props) => {
+  const editFruit = props.selectedFruit? props.selectedFruit.description : "";
   const [ currentSelection, setCurrentSelection ] = useState('Create Options');
-  const [ description, setDescription ] = useState('');
+  const [ description, setDescription ] = useState(editFruit);
+
+
   
   const handleSelect = (eventKey) =>{
     setCurrentSelection(eventKey.toUpperCase());
@@ -32,6 +35,11 @@ const CreateForm = (props) => {
     console.log(currentSelection, description);
     props.submitAction({bucketID: props.selected.id, description})
   }
+
+  useEffect( ()=>{
+    if(props.selectedFruit)
+      setDescription(props.selectedFruit.description)
+  }, [props.selectedFruit])
 
   return (
     <Form onSubmit={handleSumbit}>
@@ -63,6 +71,7 @@ const CreateForm = (props) => {
 const mapStateToProps = (state) =>{
   return {
     selected: state.selected,
+    selectedFruit: state.editFruit
   }
 }
 

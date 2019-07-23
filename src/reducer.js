@@ -1,9 +1,10 @@
-import { NEW_BUCKETS, NEW_FRUITS, NEW_SELECTED } from './Actions';
+import { NEW_BUCKETS, NEW_FRUITS, NEW_SELECTED, EDIT_FRUIT } from './Actions';
 
 const initialState = {
   buckets:[],
   fruits:[],
-  selected:null
+  selected:null,
+  editFruit:null,
 }
 
 function reducer (state = initialState, action) {
@@ -18,6 +19,8 @@ function reducer (state = initialState, action) {
         return { ...state, fruits: action.payload }
       case NEW_SELECTED:
         return { ...state, selected: action.payload }
+      case EDIT_FRUIT:
+        return { ...state, editFruit: action.payload }
       default:
         return state;
   }      

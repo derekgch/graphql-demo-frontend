@@ -2,11 +2,19 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
-import { deleteFruitAction } from '../Actions';
+import { deleteFruitAction, storeEditFruit } from '../Actions';
 
 const FruitsContainer = (props) => {
-  const handleDelete = (id) =>{
+  const handleDelete = (event, id) =>{
+    event.stopPropagation();
+    event.preventDefault();
     props.deleteFruit(id);
+  }
+
+  const handleClick =(event, element) =>{
+    event.stopPropagation();
+    event.preventDefault();
+    props.selectFruit(element);
   }
 
   const generateRows = () =>{
@@ -15,10 +23,10 @@ const FruitsContainer = (props) => {
     return props.fruits.map( element => {
       const {_id, description } = element;
       return (
-        <tr key={_id}>
+        <tr key={_id} onClick={event => handleClick(event, element)}>
           <td>{_id}</td>
           <td>{description}</td>
-          <td><Button onClick={() => handleDelete(_id)}>Delete</Button></td>
+          <td><Button onClick={(event) => handleDelete(event, _id)}>Delete</Button></td>
         </tr>
       )
     })
@@ -45,13 +53,15 @@ const FruitsContainer = (props) => {
 
 const mapStateToProps = (state) => {	
 	return {
-    	fruits:state.fruits,
+      fruits:state.fruits,
+      editFruit:state.editFruit,
 	}
 }
 
 const mapDispatchToProps = dispatch =>{
   return {
-    deleteFruit: id => dispatch(deleteFruitAction(id))
+    deleteFruit: id => dispatch(deleteFruitAction(id)),
+    selectFruit: obj => dispatch(storeEditFruit(obj))
   }
 }
 

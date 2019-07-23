@@ -4,6 +4,7 @@ export const NEW_BUCKETS = 'NEW_BUCKETS';
 export const NEW_FRUITS = 'NEW_FRUITS';
 export const NEW_SELECTED = 'NEW_SELECTED';
 export const POST_FRUIT = 'POST_FRUIT';
+export const EDIT_FRUIT = 'EDIT_FRUIT';
 
 
 export function storeBuckets(payload){
@@ -27,6 +28,13 @@ export function storeSelected(payload){
   }
 }
 
+export function storeEditFruit(payload){
+  return {
+    type:EDIT_FRUIT,
+    payload
+  }
+}
+
 export function deleteFruitAction(id) {
   return ( dispatch, getState ) =>{
     const removeFruit = getState().fruits.filter( each => each._id !== id)
@@ -37,7 +45,6 @@ export function deleteFruitAction(id) {
         dispatch(fetchBucketAction()) 
         dispatch(storeFruits(removeFruit))
       })
-
   }
 }
 
