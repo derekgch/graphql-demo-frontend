@@ -9,6 +9,7 @@ const CreateForm = (props) => {
   const editFruit = props.selectedFruit? props.selectedFruit.description : "";
   const [ currentSelection, setCurrentSelection ] = useState('Create');
   const [ description, setDescription ] = useState(editFruit);
+  const [ currentBucket, setCurrentBucket ] = useState();
 
   const handleSelect = (eventKey) =>{
     setCurrentSelection(eventKey.toUpperCase());
@@ -23,6 +24,13 @@ const CreateForm = (props) => {
       default:
         break;
     }
+  }
+
+  const handleMoveFruit = (eventKey, event) =>{
+    console.log("eventKey", eventKey)
+    console.log("event",event)
+
+    console.log("handlemovefruit")
   }
 
   const handleSumbit= (event) =>{
@@ -46,6 +54,7 @@ const CreateForm = (props) => {
     if(props.selectedFruit){
       setDescription(props.selectedFruit.description);
       setCurrentSelection("EDIT");
+      setCurrentBucket("")
     }else{
       emptyFruit();
     }
@@ -54,13 +63,13 @@ const CreateForm = (props) => {
   return (
     <Form onSubmit={handleSumbit}>
       <Dropdown onSelect={handleSelect}>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        {currentSelection}
-      </Dropdown.Toggle>
-      <Dropdown.Menu >
-        <Dropdown.Item  eventKey='Create' > Create </Dropdown.Item>
-        <Dropdown.Item  eventKey='Edit' > Edit </Dropdown.Item>
-      </Dropdown.Menu>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {currentSelection}
+        </Dropdown.Toggle>
+        <Dropdown.Menu >
+          <Dropdown.Item  eventKey='Create' > Create </Dropdown.Item>
+          <Dropdown.Item  eventKey='Edit' > Edit </Dropdown.Item>
+        </Dropdown.Menu>
       </Dropdown>
       
       <Form.Group controlId="formBasicInput">
@@ -71,6 +80,21 @@ const CreateForm = (props) => {
           onChange={handleChange}
           value={description}/>
       </Form.Group>
+
+      <Dropdown onSelect={handleMoveFruit}>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {props.selected? props.selected.title: "Buckets"}
+        </Dropdown.Toggle>
+        <Dropdown.Menu >
+          {props.buckets.map(e => {
+            return <Dropdown.Item  eventKey={e._id} > {e.title} </Dropdown.Item>
+          })}
+          {/* <Dropdown.Item  eventKey='Create' > Create </Dropdown.Item>
+          <Dropdown.Item  eventKey='Edit' > Edit </Dropdown.Item> */}
+        </Dropdown.Menu>
+      </Dropdown>
+
+
       <Button variant="primary" type="submit">
         Submit
       </Button>
@@ -81,7 +105,8 @@ const CreateForm = (props) => {
 const mapStateToProps = (state) =>{
   return {
     selected: state.selected,
-    selectedFruit: state.editFruit
+    selectedFruit: state.editFruit,
+    buckets: state.buckets,
   }
 }
 
